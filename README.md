@@ -1,41 +1,43 @@
-# Corchibi2 ZMK config
+# Corchibi2 ZMK ファームウェア
 
-This config is a PAW3222-based dry-cell variant that reuses Corchibi's keymap,
-matrix transform, physical layout, and charlieplex kscan.
+Corchibi2 は、Corchibi のキー配置、matrix transform、physical layout、
+charlieplex kscan を引き継ぎつつ、センサーを PAW3222 に変更した乾電池版の
+ZMK ファームウェアです。
 
-## Hardware split
+## ハードウェア構成
 
-- `Corchibi2_L` is the split peripheral and forwards the left PAW3222 input.
-- `Corchibi2_R` is the split central and handles the local PAW3222 sensor plus
-  the forwarded left input.
-- Key and kscan pins match Corchibi.
-- PAW3222 uses `SCLK=P0.10`, `SDIO=P0.09`, and `MOTION=P1.12`.
-- PAW3222 NCS is tied to GND by default, so the firmware does not configure a
-  SPI chip-select GPIO. If the jumper is changed to route NCS to `RE_B`, add
-  `cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;` under `&spi0` and disable or move
-  the encoder B pin.
-- Rotary encoder uses `RE_A=P0.04` and `RE_B=P0.05`.
-- `INPUT_VOLTAGE` is read on ADC0 / `P0.02`.
+- `Corchibi2_L` は split peripheral です。左側の PAW3222 入力を右側へ転送します。
+- `Corchibi2_R` は split central です。右側の PAW3222 と、左側から転送された入力を扱います。
+- キー配線と kscan ピンは Corchibi と同じです。
+- PAW3222 は `SCLK=P0.10`、`SDIO=P0.09`、`MOTION=P1.12` を使います。
+- PAW3222 の NCS はデフォルトで GND 固定です。そのため、ファームウェア側では SPI chip-select GPIO を設定していません。
+- NCS をジャンパで `RE_B` に接続する場合は、`&spi0` 配下に `cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;` を追加し、エンコーダーの B ピンを無効化するか別ピンへ移動してください。
+- ロータリーエンコーダーは `RE_A=P0.04`、`RE_B=P0.05` を使います。
+- 乾電池の入力電圧は ADC0 / `P0.02` で読みます。
 
-## Power policy
+## 電源設定
 
-- ZMK sleep is enabled.
-- BLE TX power is set to 0 dBm instead of the Corchibi +8 dBm setting.
-- PAW3222 `force-awake` is not enabled.
-- Logging, shell, and SPI shell are disabled.
-- The insomnia behavior module is not included.
-- Battery reporting follows DYA Dash's dry-cell voltage-divider style:
-  `output-ohms = 470k`, `full-ohms = 1M + 470k`, with Ni-MH 1-cell
-  millivolt-to-percent thresholds.
+- ZMK sleep を有効にしています。
+- BLE TX power は Corchibi の +8 dBm ではなく、0 dBm にしています。
+- PAW3222 の `force-awake` は有効にしていません。
+- logging、shell、SPI shell は無効にしています。
+- insomnia behavior module は含めていません。
+- 電池残量は DYA Dash の乾電池向け voltage divider 構成を参考にしています。
+- 分圧抵抗は `output-ohms = 470k`、`full-ohms = 1M + 470k` です。
+- 1 セル Ni-MH 向けの millivolt-to-percent thresholds で Bluetooth の battery level として報告します。
 
-## 3D data
+## 3D データ
 
-Case and related 3D model files are available under `3D_data/`.
+ケースなどの 3D モデルは `3D_data/` にあります。
 
-## License
+3D モデルはファームウェアとは別ライセンスです。MIT License の対象ではありません。
+商用利用はできません。改変は私的利用に限ります。改変した 3D モデルや派生物の共有、配布、販売はできません。
 
-- Firmware source code, ZMK configuration files, and documentation outside
-  `3D_data/` are licensed under the MIT License. See `LICENSE`.
-- 3D model files under `3D_data/` are licensed separately under
-  CC BY-NC-ND 4.0. Commercial use is not permitted, and modifications are
-  limited to private, personal use. See `3D_data/LICENSE.md`.
+詳しくは `3D_data/README.md` と `3D_data/LICENSE.md` を確認してください。
+
+## ライセンス
+
+このリポジトリは、ファームウェアと 3D モデルでライセンスが分かれています。
+
+- ファームウェアのソースコード、ZMK 設定ファイル、`3D_data/` 外のドキュメントは MIT License です。詳しくは `LICENSE` を確認してください。
+- `3D_data/` 以下の 3D モデルファイルは CC BY-NC-ND 4.0 です。商用利用はできません。改変は私的利用に限ります。改変したデータや派生物の共有、配布、販売はできません。詳しくは `3D_data/LICENSE.md` を確認してください。
