@@ -27,3 +27,15 @@ matrix transform, physical layout, and charlieplex kscan.
 - Battery reporting follows DYA Dash's dry-cell voltage-divider style:
   `output-ohms = 470k`, `full-ohms = 1M + 470k`, with Ni-MH 1-cell
   millivolt-to-percent thresholds.
+
+## 3D data
+
+Case and related 3D model files are available under `3D_data/`.
+
+## License
+
+- Firmware source code, ZMK configuration files, and documentation outside
+  `3D_data/` are licensed under the MIT License. See `LICENSE`.
+- 3D model files under `3D_data/` are licensed separately under
+  CC BY-NC-ND 4.0. Commercial use is not permitted, and modifications are
+  limited to private, personal use. See `3D_data/LICENSE.md`.
