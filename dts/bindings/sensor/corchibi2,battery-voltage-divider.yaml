@@ -1,0 +1,17 @@
+# Copyright (c) 2020 The ZMK Contributors
+# Copyright (c) 2026 The Corchibi2 contributors
+# SPDX-License-Identifier: MIT
+
+description: Corchibi2 dry-cell battery SoC monitoring using a voltage divider
+
+compatible: "corchibi2,battery-voltage-divider"
+
+include: voltage-divider.yaml
+
+properties:
+  mv-to-pct-thresholds:
+    type: array
+    required: true
+    description: |
+      Battery millivolt thresholds for 0%, 10%, ... 100% state-of-charge
+      mapping.
