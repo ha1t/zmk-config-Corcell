@@ -19,7 +19,10 @@ ZMK ファームウェアです。
 
 - ZMK sleep を有効にしています。
 - BLE TX power は Corchibi の +8 dBm ではなく、0 dBm にしています。
+- BLE preferred connection interval は `6-12`、latency は `0` にして、ポインタ操作の遅延を抑えています。
 - PAW3222 の `force-awake` は有効にしていません。
+- ZMK Studio は無効にしています。
+- smooth scrolling は無効にしています。
 - logging、shell、SPI shell は無効にしています。
 - insomnia behavior module は含めていません。
 - 電池残量は DYA Dash の乾電池向け voltage divider 構成を参考にしています。

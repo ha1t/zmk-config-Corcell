@@ -56,21 +56,6 @@
         sensor-dpi = <1216>;
     };
 
-    pointer_accel_R_scroll: pointer_accel_R_scroll {
-        compatible = "zmk,input-processor-acceleration";
-        status = "okay";
-        #input-processor-cells = <0>;
-        input-type = <INPUT_EV_REL>;
-        codes = <INPUT_REL_X INPUT_REL_Y>;
-        sensitivity = <2000>;
-        min-factor = <1000>;
-        max-factor = <3000>;
-        speed-threshold = <500>;
-        speed-max = <3600>;
-        acceleration-exponent = <1>;
-        sensor-dpi = <1216>;
-    };
-
     scroll_accel_R: scroll_accel_R {
         compatible = "zmk,input-processor-acceleration";
         status = "okay";
@@ -86,28 +71,7 @@
         sensor-dpi = <1216>;
     };
 
-    scroll_accel_R_scroll: scroll_accel_R_scroll {
-        compatible = "zmk,input-processor-acceleration";
-        status = "okay";
-        #input-processor-cells = <0>;
-        input-type = <INPUT_EV_REL>;
-        codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
-        sensitivity = <1000>;
-        min-factor = <300>;
-        max-factor = <3000>;
-        speed-threshold = <600>;
-        speed-max = <4200>;
-        acceleration-exponent = <2>;
-        sensor-dpi = <1216>;
-    };
-
     vertical_scroll_mapper_R: vertical_scroll_mapper_R {
-        compatible = "zmk,input-processor-vertical-scroll";
-        #input-processor-cells = <0>;
-        type = <INPUT_EV_REL>;
-    };
-
-    vertical_scroll_mapper_R_scroll: vertical_scroll_mapper_R_scroll {
         compatible = "zmk,input-processor-vertical-scroll";
         #input-processor-cells = <0>;
         type = <INPUT_EV_REL>;
