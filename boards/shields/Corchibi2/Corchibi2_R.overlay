@@ -49,9 +49,9 @@
         codes = <INPUT_REL_X INPUT_REL_Y>;
         sensitivity = <2000>;
         min-factor = <1000>;
-        max-factor = <3000>;
-        speed-threshold = <500>;
-        speed-max = <3600>;
+        max-factor = <2400>;
+        speed-threshold = <850>;
+        speed-max = <3000>;
         acceleration-exponent = <1>;
         sensor-dpi = <1216>;
     };
@@ -128,8 +128,7 @@
         <&auto_mouse_layer 4 700>,
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
         <&pointer_accel_R>,
-        <&zip_xy_scaler 1 10>,
-        <&zip_report_rate_limit 4>;
+        <&zip_xy_scaler 1 10>;
 
     scroll_layer {
         layers = <5>;
@@ -137,7 +136,7 @@
             <&zip_report_rate_limit 8>,
             <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>,
             <&vertical_scroll_mapper_R>,
-            <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_scroll_transform 0>,
             <&scroll_accel_R>,
             <&zip_scroll_scaler 1 480>;
     };
