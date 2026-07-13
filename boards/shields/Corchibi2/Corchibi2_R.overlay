@@ -61,7 +61,7 @@
     input-processors =
         <&auto_mouse_layer 4 700>,
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_xy_scaler 7 10>;
+        <&zip_xy_scaler 7 20>;
 
     scroll_layer {
         layers = <5>;
