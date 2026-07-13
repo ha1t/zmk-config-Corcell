@@ -44,7 +44,7 @@
 &studio_unlock  &trans  &trans  &trans  &trans  &trans  &bt BT_CLR  &trans  &trans  &trans  &trans  &bt BT_SEL 0
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_SEL 1
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &bt BT_SEL 2
-&trans  &trans  &trans  &trans  &trans  &trans  &none  &trans  &trans  &trans  &trans  &bt BT_SEL 3
+&trans  &trans  &trans  &trans  &trans  &trans  &none  &trans  &studio_unlock  &trans  &trans  &bt BT_SEL 3
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
