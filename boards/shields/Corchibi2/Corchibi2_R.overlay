@@ -66,11 +66,9 @@
     scroll_layer {
         layers = <5>;
         input-processors =
-            <&zip_report_rate_limit 8>,
             <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>,
             <&vertical_scroll_mapper_R>,
-            <&zip_scroll_transform 0>,
-            <&zip_scroll_scaler 1 480>;
+            <&zip_scroll_scaler 1 5>;
     };
 };
 
