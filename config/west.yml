@@ -1,21 +1,48 @@
 manifest:
+  defaults:
+    remote: cormoran
+    revision: main
   remotes:
+    - name: cormoran
+      url-base: https://github.com/cormoran
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
-    - name: badjeff
-      url-base: https://github.com/badjeff
   projects:
+    - name: zmk-west-commands
+      import: true
     - name: zmk-driver-paw3222
       remote: sekigon-gonnoc
       revision: df652881be2520bde4f64ab6ca35e4c5708f4f9b
-    - name: zmk-input-processor-report-rate-limit
-      remote: badjeff
-      revision: f43f37aae7aaa7bf0ec4d432683b873a7e3a8efa
+    - name: zmk-module-ble-management
+    - name: zmk-module-runtime-input-processor
+    - name: zmk-module-settings-rpc
     - name: zmk
-      remote: zmkfirmware
-      revision: 354cff9
-      import: app/west.yml
+      revision: main+dya
+      import:
+        file: app/west.yml
+    - name: zephyr
+      revision: v4.1.0+zmk-fixes+nrf-half-duplex-uart
+      clone-depth: 1
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
   self:
     path: config

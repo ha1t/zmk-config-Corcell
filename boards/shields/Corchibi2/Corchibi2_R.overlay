@@ -3,7 +3,6 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <input/processors.dtsi>
-#include <input/processors/report_rate_limit.dtsi>
 
 &default_transform {
     col-offset = <6>;
@@ -60,15 +59,14 @@
     device = <&trackball_R>;
     input-processors =
         <&auto_mouse_layer 4 700>,
-        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_xy_scaler 7 20>;
+        <&mouse_runtime_input_processor>;
 
     scroll_layer {
         layers = <5>;
         input-processors =
             <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>,
             <&vertical_scroll_mapper_R>,
-            <&zip_scroll_scaler 1 10>;
+            <&scroll_runtime_input_processor>;
     };
 };
 
@@ -96,7 +94,6 @@
     status = "disabled";
     device = <&trackball_split_L>;
     input-processors =
-        <&zip_report_rate_limit 8>,
         <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)>,
         <&zip_xy_to_scroll_mapper>,
         <&zip_scroll_scaler 1 4>;
