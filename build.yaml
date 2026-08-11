@@ -1,12 +1,12 @@
 include:
-  - board: xiao_ble//zmk
-    shield: Corchibi2_R
-    artifact-name: Corchibi2_R-dya-studio-xiao_ble_zmk
+  - board: xiao_ble/nrf52840/zmk
+    shield: corcell_r
+    artifact-name: Corcell_R-dya-studio-xiao_ble_zmk
     snippets:
       - studio-rpc-usb-uart
-  - board: xiao_ble//zmk
-    shield: Corchibi2_L
-    artifact-name: Corchibi2_L-dya-studio-xiao_ble_zmk
-  - board: xiao_ble//zmk
+  - board: xiao_ble/nrf52840/zmk
+    shield: corcell_l
+    artifact-name: Corcell_L-dya-studio-xiao_ble_zmk
+  - board: xiao_ble/nrf52840/zmk
     shield: settings_reset
     artifact-name: settings_reset-dya-studio-xiao_ble_zmk

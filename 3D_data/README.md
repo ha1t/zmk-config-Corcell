@@ -1,18 +1,18 @@
-# Corchibi2 3D データ
+# Corcell 3D データ
 
-このディレクトリには、Corchibi2 のケースおよび関連する 3D モデルファイルを収録しています。
+このディレクトリには、Corcell のケースおよび関連する 3D モデルファイルを収録しています。
 
 ## ファイル
 
-- `Corchibi2_R_battery_cover.stp`
-- `Corchibi2_R_battery_cover_plate.stp`
-- `Corchibi2_R_bottom.stl`
-- `Corchibi2_R_pcb.stp`
-- `Corchibi2_bottom_frame.stp`
-- `Corchibi2_switch_cover.stp`
-- `Corchibi2_top_module.stp`
-- `Corchibi2_top_plate_normal.stp`
-- `Corchibi2_top_spacer.stp`
+- `Corcell_R_battery_cover.stp`
+- `Corcell_R_battery_cover_plate.stp`
+- `Corcell_R_bottom.stl`
+- `Corcell_R_pcb.stp`
+- `Corcell_bottom_frame.stp`
+- `Corcell_switch_cover.stp`
+- `Corcell_top_module.stp`
+- `Corcell_top_plate_normal.stp`
+- `Corcell_top_spacer.stp`
 
 ## ライセンス
 

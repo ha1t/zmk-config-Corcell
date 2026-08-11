@@ -1,4 +1,4 @@
-# Corchibi2 3D Model License
+# Corcell 3D Model License
 
 The 3D model files in this directory are licensed under the Creative Commons
 Attribution-NonCommercial-NoDerivatives 4.0 International License

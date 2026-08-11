@@ -1,13 +1,13 @@
-# Corchibi2 ZMK ファームウェア
+# Corcell ZMK ファームウェア
 
-Corchibi2 は、Corchibi のキー配置、matrix transform、physical layout、
+Corcell は、Corchibi のキー配置、matrix transform、physical layout、
 charlieplex kscan を引き継ぎつつ、センサーを PAW3222 に変更した乾電池版の
 ZMK ファームウェアです。
 
 ## ハードウェア構成
 
-- `Corchibi2_L` は split peripheral です。左側の PAW3222 入力を右側へ転送します。
-- `Corchibi2_R` は split central です。右側の PAW3222 と、左側から転送された入力を扱います。
+- `corcell_l` は split peripheral です。左側の PAW3222 入力を右側へ転送します。
+- `corcell_r` は split central です。右側の PAW3222 と、左側から転送された入力を扱います。
 - キー配線と kscan ピンは Corchibi と同じです。
 - PAW3222 は `SCLK=P0.10`、`SDIO=P0.09`、`MOTION=P1.12` を使います。
 - PAW3222 の NCS はデフォルトで GND 固定です。そのため、ファームウェア側では SPI chip-select GPIO を設定していません。
@@ -22,7 +22,7 @@ ZMK ファームウェアです。
 - BLE TX power は Corchibi の +8 dBm ではなく、0 dBm にしています。
 - BLE preferred connection interval は `6-12`、latency は `0` にして、ポインタ操作の遅延を抑えています。
 - PAW3222 の `force-awake` は有効にしていません。
-- ZMK Studio は無効にしています。
+- DYA Studio 版では ZMK Studio RPC を有効にし、ロックは無効にしています。
 - smooth scrolling は無効にしています。
 - logging、shell、SPI shell は無効にしています。
 - insomnia behavior module は含めていません。
