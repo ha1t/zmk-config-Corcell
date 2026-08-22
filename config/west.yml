@@ -1,4 +1,5 @@
 manifest:
+  version: 1.2
   defaults:
     remote: cormoran
     revision: main
@@ -16,8 +17,22 @@ manifest:
       remote: sekigon-gonnoc
       revision: df652881be2520bde4f64ab6ca35e4c5708f4f9b
     - name: zmk-module-ble-management
+    - name: zmk-feature-custom-settings
     - name: zmk-module-runtime-input-processor
     - name: zmk-module-settings-rpc
+    - name: zmk-feature-input-stream
+    - name: zmk-feature-module-physical-layout
+    - name: zmk-feature-runtime-combo
+      import: true
+    - name: zmk-feature-runtime-macro
+      import: true
+    - name: zmk-feature-fast-keymap
+    - name: zmk-feature-device-info
+    - name: zmk-feature-kscan-diagnostics
+      import: true
+    - name: zmk-feature-watchdog
+      import: true
+    - name: zmk-feature-zephyr-setting-expose
     - name: zmk
       revision: main+dya
       import:
@@ -34,6 +49,7 @@ manifest:
           - hal_microchip
           - hal_nxp
           - hal_openisa
+          - hal_silabs
           - hal_xtensa
           - hal_st
           - hal_ti
