@@ -1,0 +1,15 @@
+&encoder {
+    /* FPC PAW3222 NCS position is encoder A, and MOTION position is encoder B. */
+    a-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    b-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    steps = <80>;
+    status = "okay";
+};
+
+&sensors {
+    status = "okay";
+};
+
+&spi0 {
+    status = "disabled";
+};

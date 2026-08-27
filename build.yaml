@@ -4,9 +4,12 @@ include:
     artifact-name: Corcell_R-dya-studio-xiao_ble_zmk
     snippets:
       - studio-rpc-usb-uart
+      - corcell-right-slot1-paw3222
   - board: xiao_ble/nrf52840/zmk
     shield: corcell_l
     artifact-name: Corcell_L-dya-studio-xiao_ble_zmk
+    snippets:
+      - corcell-left-slot1-paw3222
   - board: xiao_ble/nrf52840/zmk
     shield: settings_reset
     artifact-name: settings_reset-dya-studio-xiao_ble_zmk
