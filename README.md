@@ -3,8 +3,19 @@
 Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK ファームウェアです。
 キー配線、matrix transform、physical layout、charlieplex kscan は Corchibi 互換です。
 
-`main` ブランチは通常版ファームウェアです。
-DYA Studio 対応版は `dya-studio` ブランチで管理します。
+**このブランチ（`dya-studio`）は DYA Studio 対応版です。**
+通常版は `main` ブランチで管理します。
+
+通常版との違いは DYA Studio 関連のみで、キー配線・センサー設定・ポインタの
+効き方は `main` と揃えてあります。
+
+- ZMK Studio を有効にし、ロックは無効（`CONFIG_ZMK_STUDIO_LOCKING=n`）にしています。
+- Studio へは BLE トランスポート（`CONFIG_ZMK_STUDIO_TRANSPORT_BLE`、`ZMK_BLE` 有効時の既定）で
+  接続します。USB シリアル用の `studio-rpc-usb-uart` snippet は使いません。ZMK の
+  `build-user-config.yml` は 1 ビルドにつき snippet を 1 つしか渡せず、
+  FPC モジュール用の snippet と併用できないためです。
+- ポインタの倍率は `mouse_runtime_input_processor` / `scroll_runtime_input_processor`
+  に持たせているので、DYA Studio から実機で調整できます。
 
 ## ハードウェア構成
 
@@ -75,7 +86,7 @@ include:
 - smooth scrolling は無効にしています。
 - logging、shell、SPI shell は無効にしています。
 - insomnia behavior module は含めていません。
-- 通常版 `main` では DYA Studio 用の runtime input processor を含めていません。DYA Studio で保存したポインタ設定が通常版に影響しない構成です。
+- DYA Studio 用の runtime input processor を含めています。通常版 `main` には含めていないため、DYA Studio で保存したポインタ設定は通常版に影響しません。
 - 電池残量は乾電池向け voltage divider 構成で Bluetooth の battery level として報告します。
 - 分圧抵抗は `output-ohms = 470k`、`full-ohms = 1M + 470k` です。
 - 1 セル Ni-MH 向けの millivolt-to-percent thresholds で Bluetooth の battery level として報告します。
