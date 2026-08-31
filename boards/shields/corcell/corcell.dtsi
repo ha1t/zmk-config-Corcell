@@ -144,8 +144,8 @@
     y-codes = <INPUT_REL_Y>;
     x-invert;
     y-invert;
-    scale-multiplier = <7>;
-    scale-divisor = <20>;
+    scale-multiplier = <3>;
+    scale-divisor = <8>;
     track-remainders;
     temp-layer-keep-keycodes = <224 225 226 227 228 229 230 231>;
 };
