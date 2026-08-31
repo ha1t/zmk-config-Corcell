@@ -16,8 +16,6 @@ manifest:
     - name: zmk-driver-paw3222
       remote: sekigon-gonnoc
       revision: df652881be2520bde4f64ab6ca35e4c5708f4f9b
-    - name: zmk-feature-custom-settings
-    - name: zmk-module-runtime-input-processor
     - name: zmk-feature-module-physical-layout
     - name: zmk
       revision: main+dya
