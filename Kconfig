@@ -17,3 +17,22 @@ config CORCELL_BATTERY_VOLTAGE_DIVIDER
     depends on SENSOR
     help
         Enable Corcell dry-cell voltage divider battery monitoring.
+
+config CORCELL_POWER_ON_LED
+    bool "Light the XIAO LED at power-on"
+    default y
+    depends on GPIO
+    help
+        Light the XIAO's green LED for a moment whenever the board powers
+        up, then release the pin. Inserting a dry cell makes the LED
+        flash, which tells you during assembly that the cell and the
+        boost converter are alive without pairing the keyboard first.
+
+config CORCELL_POWER_ON_LED_MS
+    int "Power-on LED duration in milliseconds"
+    default 2000
+    range 100 10000
+    depends on CORCELL_POWER_ON_LED
+    help
+        How long the power-on LED stays lit. The pin is disconnected
+        afterwards, so this costs nothing once the LED goes dark.

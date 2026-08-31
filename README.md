@@ -80,6 +80,16 @@ include:
 - 分圧抵抗は `output-ohms = 470k`、`full-ohms = 1M + 470k` です。
 - 1 セル Ni-MH 向けの millivolt-to-percent thresholds で Bluetooth の battery level として報告します。
 
+## 電源投入 LED
+
+電池を入れると、XIAO の緑 LED が 2 秒だけ点灯して消えます。
+組み立て時に、ペアリングしなくても電池と昇圧回路が生きているか確認できます。
+
+- 点灯後は GPIO を切り離すので、消えたあとの消費電流はありません。
+- 点灯時間は `CONFIG_CORCELL_POWER_ON_LED_MS`（既定 2000、100〜10000 ms）で変えられます。
+- 不要なら `CONFIG_CORCELL_POWER_ON_LED=n` を conf に書けば丸ごと無効化できます。
+- 左右どちらの半身でも点灯します。USB 給電でも同じく点灯します。
+
 ## ライセンス
 
 このリポジトリ内のファームウェアソースコード、ZMK 設定ファイル、ドキュメントは MIT License です。
