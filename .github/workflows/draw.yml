@@ -5,9 +5,9 @@ on:
   # push時に自動で実行する場合は、以下のコメントアウトを外す
   push:
     paths:
-      - "config/Corell.keymap"
+      - "config/corcell.keymap"
       - "keymap-drawer/keymap_drawer.config.yaml"
-      - "boards/shields/Corell/corell.dtsi"
+      - "boards/shields/corcell/corcell.dtsi"
 
 jobs:
   draw:
