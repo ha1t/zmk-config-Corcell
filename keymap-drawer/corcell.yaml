@@ -154,7 +154,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   '3':
-  - '&studio_unlock'
+  - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -200,7 +200,7 @@ layers:
   - {t: ▽, type: trans}
   - ''
   - {type: held}
-  - '&studio_unlock'
+  - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: BT, h: '3'}
