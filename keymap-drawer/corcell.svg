@@ -949,6 +949,7 @@ text { fill: #000000; }
 <g transform="translate(28, 56)" class="key keypos-0">
 <rect rx="6" ry="6" x="-27" y="-27" width="54" height="54" class="key side"/>
 <rect rx="8" ry="8" x="-21" y="-21" width="42" height="42" class="key"/>
+<text x="0" y="0" class="key tap"><tspan style="font-size: 64%">&amp;studio_un…</tspan></text>
 </g>
 <g transform="translate(84, 56)" class="key trans keypos-1">
 <rect rx="6" ry="6" x="-27" y="-27" width="54" height="54" class="key trans side"/>
@@ -1183,6 +1184,7 @@ text { fill: #000000; }
 <g transform="translate(678, 231)" class="key keypos-46">
 <rect rx="6" ry="6" x="-27" y="-27" width="54" height="54" class="key side"/>
 <rect rx="8" ry="8" x="-21" y="-21" width="42" height="42" class="key"/>
+<text x="0" y="0" class="key tap"><tspan style="font-size: 64%">&amp;studio_un…</tspan></text>
 </g>
 <g transform="translate(756, 210)" class="key trans keypos-47">
 <rect rx="6" ry="6" x="-27" y="-27" width="54" height="54" class="key trans side"/>
