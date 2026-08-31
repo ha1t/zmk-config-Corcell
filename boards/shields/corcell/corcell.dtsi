@@ -59,7 +59,6 @@
         compatible = "zmk,keymap-sensors";
         sensors = <&encoder>;
         triggers-per-rotation = <20>;
-        status = "disabled";
     };
 
     /* Keep the matrix transform and physical layout identical to Corchibi. */

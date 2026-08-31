@@ -8,7 +8,9 @@ DYA Studio 対応版は `dya-studio` ブランチで管理します。
 
 ## ハードウェア構成
 
-- `corcell_l` は split peripheral です。左側のモジュール入力を右側へ転送します。
+- `corcell_l` は split peripheral です。左側のモジュール入力を右側へ転送する配線はありますが、
+  デフォルトでは `trackball_split_L` / `trackball_listener_L` を無効にしているため、
+  左側のポインタ入力は使いません。
 - `corcell_r` は split central です。右側のモジュール入力と、左側から転送された入力を扱います。
 - キー配線と kscan ピンは Corchibi と同じです。
 - 6 ピン FPC スロットには、左右それぞれ 1 つずつ任意の入力モジュールを接続できます。
@@ -16,7 +18,9 @@ DYA Studio 対応版は `dya-studio` ブランチで管理します。
 - PAW3222 は `SCLK=P0.10`、`SDIO=P0.09`、`MOTION=P1.12` を使います。
 - PAW3222 の NCS はデフォルトで GND 固定です。そのため、ファームウェア側では SPI chip-select GPIO を設定していません。
 - PAW3222 で chip-select GPIO 制御が必要になった場合のみ、NCS を `RE_B` 側へジャンパして `&spi0` 配下に `cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;` を追加します。
-- PAW3222 の CPI はファームウェア側で上書きせず、カーソル移動量は固定の input processor 倍率で調整します。
+- PAW3222 の CPI はファームウェア側で上書きせず、カーソル移動量は固定の input processor 倍率
+  （`zip_xy_scaler 7 20`、スクロールは `zip_scroll_scaler 1 10`）で調整します。
+- 基板上のロータリーエンコーダーは `RE_A=P0.04`、`RE_B=P0.05` で、デフォルトで有効です。
 - FPC エンコーダーモジュールでは、PAW3222 の `NCS` 位置を A 相、`MOTION` 位置を B 相として使います。
 - 現行回路では、エンコーダーモジュール使用時に `NCS` を `RE_B` 側へジャンパしてください。このときファームウェアは `A=P0.05`、`B=P1.12` として読みます。
 - 乾電池の入力電圧は ADC0 / `P0.02` で読みます。

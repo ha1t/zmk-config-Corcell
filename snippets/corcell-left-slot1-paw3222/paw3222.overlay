@@ -36,6 +36,5 @@
 };
 
 &trackball_split_L {
-    status = "okay";
     device = <&corcell_left_slot1_paw3222>;
 };

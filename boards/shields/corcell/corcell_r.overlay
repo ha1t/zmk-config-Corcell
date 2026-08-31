@@ -19,3 +19,8 @@
 &spi2 {
     status = "disabled";
 };
+
+/* On-board rotary encoder on RE_A/RE_B. An FPC encoder snippet moves these pins. */
+&encoder {
+    status = "okay";
+};

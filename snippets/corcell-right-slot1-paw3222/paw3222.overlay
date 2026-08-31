@@ -43,7 +43,7 @@
     input-processors =
         <&corcell_right_slot1_auto_mouse_layer 4 700>,
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_xy_scaler 3 8>;
+        <&zip_xy_scaler 7 20>;
 
     scroll_layer {
         layers = <5>;
@@ -52,27 +52,15 @@
             <&corcell_right_slot1_vertical_scroll_mapper>,
             <&zip_scroll_scaler 1 10>;
     };
-};
-
-&trackball_split_L {
-    status = "okay";
 };
 
 &trackball_listener_L {
-    status = "okay";
+    status = "disabled";
     device = <&trackball_split_L>;
     input-processors =
-        <&corcell_right_slot1_auto_mouse_layer 4 700>,
         <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_xy_scaler 3 8>;
-
-    scroll_layer {
-        layers = <5>;
-        input-processors =
-            <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>,
-            <&corcell_right_slot1_vertical_scroll_mapper>,
-            <&zip_scroll_scaler 1 10>;
-    };
+        <&zip_xy_to_scroll_mapper>,
+        <&zip_scroll_scaler 1 4>;
 };
 
 &spi0 {
