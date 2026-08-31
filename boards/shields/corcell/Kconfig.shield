@@ -1,0 +1,5 @@
+config SHIELD_CORCELL_R
+    def_bool $(shields_list_contains,corcell_r)
+
+config SHIELD_CORCELL_L
+    def_bool $(shields_list_contains,corcell_l)

@@ -1,23 +1,7 @@
-#include "corell.dtsi"
 #include <dt-bindings/pinctrl/nrf-pinctrl.h>
-#include <dt-bindings/zmk/input_transform.h>
-#include <input/processors.dtsi>
-
-&kscan0 {
-    compatible = "zmk,kscan-gpio-charlieplex";
-    gpios
-        = <&gpio0 3 (GPIO_ACTIVE_HIGH)>
-        , <&gpio0 28 (GPIO_ACTIVE_HIGH)>
-        , <&gpio0 29 (GPIO_ACTIVE_HIGH)>
-        , <&gpio1 11 (GPIO_ACTIVE_HIGH)>
-        , <&gpio1 15 (GPIO_ACTIVE_HIGH)>
-        , <&gpio1 14 (GPIO_ACTIVE_HIGH)>
-        ;
-    interrupt-gpios = <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-};
 
 &pinctrl {
-    spi0_default: spi0_default {
+    corcell_left_slot1_paw3222_spi0_default: corcell_left_slot1_paw3222_spi0_default {
         group1 {
             psels = <NRF_PSEL(SPIM_SCK, 0, 10)>,
                     <NRF_PSEL(SPIM_MOSI, 0, 9)>,
@@ -25,7 +9,7 @@
         };
     };
 
-    spi0_sleep: spi0_sleep {
+    corcell_left_slot1_paw3222_spi0_sleep: corcell_left_slot1_paw3222_spi0_sleep {
         group1 {
             psels = <NRF_PSEL(SPIM_SCK, 0, 10)>,
                     <NRF_PSEL(SPIM_MOSI, 0, 9)>,
@@ -38,11 +22,11 @@
 &spi0 {
     status = "okay";
     compatible = "nordic,nrf-spim";
-    pinctrl-0 = <&spi0_default>;
-    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-0 = <&corcell_left_slot1_paw3222_spi0_default>;
+    pinctrl-1 = <&corcell_left_slot1_paw3222_spi0_sleep>;
     pinctrl-names = "default", "sleep";
 
-    trackball_L: trackball_L@0 {
+    corcell_left_slot1_paw3222: paw3222@0 {
         compatible = "pixart,paw3222";
         reg = <0>;
         status = "okay";
@@ -52,9 +36,5 @@
 };
 
 &trackball_split_L {
-    device = <&trackball_L>;
-};
-
-&encoder {
-    status = "okay";
+    device = <&corcell_left_slot1_paw3222>;
 };

@@ -1,0 +1,4 @@
+name: corcell-right-slot1-paw3222
+append:
+  EXTRA_DTC_OVERLAY_FILE: paw3222.overlay
+  EXTRA_CONF_FILE: paw3222.conf

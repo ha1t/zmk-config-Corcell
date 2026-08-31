@@ -1,5 +1,13 @@
-keymap-drawer/Corell.svg
-keymap-drawer/Corell.yaml
+keymap-drawer/Corcell.svg
+keymap-drawer/Corcell.yaml
+
+# Local build artifacts
+.build/
+build/
+*.uf2
+*.hex
+*.elf
+*.bin
 
 # macOS metadata files
 .DS_Store

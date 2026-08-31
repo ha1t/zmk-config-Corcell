@@ -1,7 +1,7 @@
-if SHIELD_CORELL_R
+if SHIELD_CORCELL_R
 
 config ZMK_KEYBOARD_NAME
-    default "Corell"
+    default "Corcell"
 
 config ZMK_SPLIT
     default y
@@ -11,10 +11,10 @@ config ZMK_SPLIT_ROLE_CENTRAL
 
 endif
 
-if SHIELD_CORELL_L
+if SHIELD_CORCELL_L
 
 config ZMK_KEYBOARD_NAME
-    default "Corell"
+    default "Corcell"
 
 config ZMK_SPLIT
     default y

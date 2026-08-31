@@ -1,8 +1,10 @@
-#include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/zmk/input_transform.h>
 #include <dt-bindings/input/input-event-codes.h>
 #include <dt-bindings/zmk/bt.h>
 #include <input/processors.dtsi>
+#include <input/processors/runtime-input-processor.dtsi>
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/zmk/runtime_input_processor.h>
 #include <physical_layouts.dtsi>
 
 &uicr {
@@ -59,6 +61,7 @@
         compatible = "zmk,keymap-sensors";
         sensors = <&encoder>;
         triggers-per-rotation = <20>;
+        status = "disabled";
     };
 
     /* Keep the matrix transform and physical layout identical to Corchibi. */
@@ -122,12 +125,12 @@
             , <&key_physical_attrs 100 100     0   350       0     0     0>
             , <&key_physical_attrs 100 100   100   350       0     0     0>
             , <&key_physical_attrs 100 100   200   325       0     0     0>
-            , <&key_physical_attrs 100 100   350   363       0     0     0>
-            , <&key_physical_attrs 100 100   450   370    1193   500   475>
-            , <&key_physical_attrs 100 100   550   365    2300   500   475>
-            , <&key_physical_attrs 100 100   950   365 (-2300)  1100   475>
-            , <&key_physical_attrs 100 100  1050   370 (-1193)  1100   475>
-            , <&key_physical_attrs 100 100  1150   363       0     0     0>
+            , <&key_physical_attrs 100 100   340   363       0     0     0>
+            , <&key_physical_attrs 100 100   460   370    1193   500   475>
+            , <&key_physical_attrs 100 100   590   365    2300   500   475>
+            , <&key_physical_attrs 100 100   910   365 (-2300)  1100   475>
+            , <&key_physical_attrs 100 100  1040   370 (-1193)  1100   475>
+            , <&key_physical_attrs 100 100  1160   363       0     0     0>
             , <&key_physical_attrs 100 100  1300   325       0     0     0>
             , <&key_physical_attrs 100 100  1400   350       0     0     0>
             , <&key_physical_attrs 100 100  1500   350       0     0     0>
@@ -135,8 +138,32 @@
     };
 };
 
+&mouse_runtime_input_processor {
+    processor-label = "cursor";
+    x-codes = <INPUT_REL_X>;
+    y-codes = <INPUT_REL_Y>;
+    x-invert;
+    y-invert;
+    scale-multiplier = <3>;
+    scale-divisor = <8>;
+    track-remainders;
+    temp-layer-keep-keycodes = <224 225 226 227 228 229 230 231>;
+};
+
+&scroll_runtime_input_processor {
+    processor-label = "scroll";
+    type = <INPUT_EV_REL>;
+    x-codes = <INPUT_REL_HWHEEL>;
+    y-codes = <INPUT_REL_WHEEL>;
+    scale-multiplier = <1>;
+    scale-divisor = <10>;
+    track-remainders;
+    active-layers = <BIT(5)>;
+    temp-layer-keep-keycodes = <224 225 226 227 228 229 230 231>;
+};
+
 &vbatt {
-    compatible = "corell,battery-voltage-divider";
+    compatible = "corcell,battery-voltage-divider";
     io-channels = <&adc 0>;
     /delete-property/ power-gpios;
     output-ohms = <470000>;

@@ -1,10 +1,10 @@
 # Copyright (c) 2020 The ZMK Contributors
-# Copyright (c) 2026 The Corell contributors
+# Copyright (c) 2026 The Corcell contributors
 # SPDX-License-Identifier: MIT
 
-description: Corell dry-cell battery SoC monitoring using a voltage divider
+description: Corcell dry-cell battery SoC monitoring using a voltage divider
 
-compatible: "corell,battery-voltage-divider"
+compatible: "corcell,battery-voltage-divider"
 
 include: voltage-divider.yaml
 
