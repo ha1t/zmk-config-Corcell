@@ -86,11 +86,18 @@
 };
 
 / {
-    /* Bring-up listener: raw movement, no processors, so the sensor can be
-     * judged on its own before any transform or scaling is layered on. */
     corcell_slot2_tps43_listener: corcell_slot2_tps43_listener {
         compatible = "zmk,input-listener";
         status = "okay";
         device = <&corcell_slot2_tps43>;
+        /*
+         * As mounted, the pad reports X for finger-up and Y for finger-right,
+         * so swinging a finger up moved the cursor right and a finger left
+         * moved it up. The transform swaps the axes and then flips Y, which
+         * the processor applies to whichever event carries the Y code after
+         * the swap.
+         */
+        input-processors =
+            <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)>;
     };
 };

@@ -35,8 +35,10 @@ XIAO nRF52840 の裏面にある PDM マイク用の隠しパッド 3 本と 3V3
 - スロット 2 の定義は snippet ではなくシールドの overlay に置いています。
   ZMK の `build-user-config.yml` は 1 ビルドにつき `-S` を 1 つしか渡せず、
   スロット 1 用 snippet と併用できないためです。
-- 立ち上げ用に、input listener には processor を一切付けていません。
-  素の動きを確認してから、`zip_xy_transform` や auto mouse layer を足してください。
+- 取り付け向きの補正として、listener に
+  `zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)` を入れています。
+  補正前は「指を上 → カーソル右」「指を左 → カーソル上」でした。
+  感度調整や auto mouse layer はまだ足していません。
 
 FFC 基板は TPS43 のピン配列に合わせたものと、既定の PAW3222 と同じピン配列に
 合わせたものの 2 種類があります。このブランチは前者を対象にしています。
