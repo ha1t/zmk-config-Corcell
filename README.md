@@ -3,8 +3,43 @@
 Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK ファームウェアです。
 キー配線、matrix transform、physical layout、charlieplex kscan は Corchibi 互換です。
 
-`main` ブランチは通常版ファームウェアです。
-DYA Studio 対応版は `dya-studio` ブランチで管理します。
+**このブランチ（`dev/fpc-slot2-tps43`）は開発・実験用です。製品には使いません。**
+通常版は `main`、DYA Studio 対応版は `dya-studio` ブランチです。
+
+## FPC スロット 2（GPIO extender + TPS43）
+
+XIAO nRF52840 の裏面にある PDM マイク用の隠しパッド 3 本と 3V3 / GND を
+引き出す FFC 基板を使い、スロット 1 のモジュール（既定は PAW3222）と
+同居する 2 つ目の入力モジュールを試すための構成です。
+
+| FFC | ネット | XIAO | 用途 |
+|---|---|---|---|
+| 1 | RDY | `P1.10`（MIC_PWR） | IQS5xx の Data Ready |
+| 2 | NRST | `P1.11`（D6・左側パッド） | **未接続** |
+| 3 | GND | GND | |
+| 4 | VDDHI | 3V3 | |
+| 5 | SCL | `P1.00`（PDM_CLK） | I2C SCL |
+| 6 | SDA | `P0.16`（PDM_DATA） | I2C SDA |
+
+- TPS43 は Azoteq IQS5xx 系なので、`nykxx/zmk-driver-azoteq-iqs5xx` を使います。
+  I2C アドレスは `0x74` です。
+- NRST は配線していません。ドライバの `reset-gpios` は任意プロパティで、
+  未指定なら初期化時のリセット手順ごと省略されます。
+- XIAO の `i2c1` は既定で `P0.04`/`P0.05` を使います。これは基板上エンコーダーの
+  `RE_A`/`RE_B` と同じピンなので、pinctrl を隠しパッド側へ振り替えています。
+- SPI0（PAW3222）と TWI1（TPS43）は nRF52840 の別インスタンスなので併用できます。
+- I2C は 400 kHz です。FFC が長い、または波形が鈍る場合は `corcell_r.overlay` の
+  `clock-frequency` を `100000` に落としてください。
+- pinctrl に `bias-pull-up` を付けて内蔵プルアップを有効にしています。
+  モジュール側に外付けプルアップがある場合は外して構いません。
+- スロット 2 の定義は snippet ではなくシールドの overlay に置いています。
+  ZMK の `build-user-config.yml` は 1 ビルドにつき `-S` を 1 つしか渡せず、
+  スロット 1 用 snippet と併用できないためです。
+- 立ち上げ用に、input listener には processor を一切付けていません。
+  素の動きを確認してから、`zip_xy_transform` や auto mouse layer を足してください。
+
+FFC 基板は TPS43 のピン配列に合わせたものと、既定の PAW3222 と同じピン配列に
+合わせたものの 2 種類があります。このブランチは前者を対象にしています。
 
 ## ハードウェア構成
 

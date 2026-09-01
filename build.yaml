@@ -1,12 +1,12 @@
 include:
   - board: xiao_ble/nrf52840/zmk
     shield: corcell_r
-    artifact-name: Corcell_R-xiao_ble_zmk
+    artifact-name: Corcell_R-tps43-xiao_ble_zmk
     snippet: corcell-right-slot1-paw3222
   - board: xiao_ble/nrf52840/zmk
     shield: corcell_l
-    artifact-name: Corcell_L-xiao_ble_zmk
+    artifact-name: Corcell_L-tps43-xiao_ble_zmk
     snippet: corcell-left-slot1-paw3222
   - board: xiao_ble/nrf52840/zmk
     shield: settings_reset
-    artifact-name: settings_reset-xiao_ble_zmk
+    artifact-name: settings_reset-tps43-xiao_ble_zmk

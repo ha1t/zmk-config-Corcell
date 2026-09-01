@@ -1,4 +1,5 @@
 #include "corcell.dtsi"
+#include <dt-bindings/pinctrl/nrf-pinctrl.h>
 
 &default_transform {
     col-offset = <6>;
@@ -23,4 +24,73 @@
 /* On-board rotary encoder on RE_A/RE_B. An FPC encoder snippet moves these pins. */
 &encoder {
     status = "okay";
+};
+
+/*
+ * FPC slot 2: the GPIO extender board breaks out the XIAO's three hidden
+ * PDM pads plus 3V3 and GND, so a second module can run alongside whatever
+ * sits in slot 1.
+ *
+ *   FPC 1 RDY    -> P1.10 (MIC_PWR)
+ *   FPC 2 NRST   -> P1.11 (D6, the left-side pad) - left unconnected here
+ *   FPC 3 GND    -> GND
+ *   FPC 4 VDDHI  -> 3V3
+ *   FPC 5 SCL    -> P1.00 (PDM_CLK)
+ *   FPC 6 SDA    -> P0.16 (PDM_DATA)
+ *
+ * This lives in the shield rather than a snippet on purpose: ZMK's
+ * build-user-config.yml passes a single -S per build, so a slot 2 snippet
+ * could not coexist with the slot 1 one.
+ */
+&pinctrl {
+    corcell_slot2_i2c1_default: corcell_slot2_i2c1_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 16)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 0)>;
+            bias-pull-up;
+        };
+    };
+
+    corcell_slot2_i2c1_sleep: corcell_slot2_i2c1_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 16)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 0)>;
+            low-power-enable;
+        };
+    };
+};
+
+/*
+ * The XIAO board defaults i2c1 to P0.04/P0.05, which are the encoder's
+ * RE_A/RE_B. Moving it onto the hidden pads clears that clash as well.
+ */
+&i2c1 {
+    status = "okay";
+    clock-frequency = <400000>;
+    pinctrl-0 = <&corcell_slot2_i2c1_default>;
+    pinctrl-1 = <&corcell_slot2_i2c1_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    corcell_slot2_tps43: iqs5xx@74 {
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+        status = "okay";
+        /* NRST is deliberately absent: reset-gpios is optional in the driver. */
+        rdy-gpios = <&gpio1 10 (GPIO_ACTIVE_HIGH)>;
+
+        one-finger-tap;
+        press-and-hold;
+        two-finger-tap;
+        scroll;
+    };
+};
+
+/ {
+    /* Bring-up listener: raw movement, no processors, so the sensor can be
+     * judged on its own before any transform or scaling is layered on. */
+    corcell_slot2_tps43_listener: corcell_slot2_tps43_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&corcell_slot2_tps43>;
+    };
 };
