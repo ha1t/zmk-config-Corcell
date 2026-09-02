@@ -9,15 +9,17 @@ Corcell を使いはじめるときの、ケースまわりの手順です。
 ボトムケースを開けます。
 
 <!--
-  動画の貼りかた:
-  1. GitHub の issue のコメント欄か、このファイルの編集画面に mp4 をドラッグ&ドロップする
-  2. 生成される https://github.com/user-attachments/assets/... の URL をコピーする
-  3. その URL を下の行に、リンク記法にせず単独行のまま貼る
-  リポジトリにコミットした動画ファイルを参照してもインライン再生されないので、
-  必ずこの添付 URL を使ってください。
+  動画の差し替えかた:
+  1. GitHub の issue に mp4 をドラッグ&ドロップし、その issue を投稿する
+     （投稿しないと添付が匿名で読める状態にならない）
+  2. 本文に入る https://github.com/user-attachments/assets/... の URL を
+     リンク記法にせず単独行のまま貼る
+  リポジトリにコミットした動画ファイルを参照してもインライン再生されません。
+  H.264 であること、10MB 以下であることが条件です（無料プランの添付上限）。
+  元動画は https://github.com/yuchamichami/zmk-config-Corcell/issues/1
 -->
 
-`VIDEO_URL_BOTTOM_CASE`
+https://github.com/user-attachments/assets/779b5c7d-4ceb-4f5f-8575-e9f26b5b49ec
 
 1. キーボードを裏返し、平らな場所に置きます。
 2. ボトムケースの縁に指をかけ、ケースを開きます。
@@ -29,9 +31,7 @@ Corcell を使いはじめるときの、ケースまわりの手順です。
 チルトスタンド部分は 3D プリントのサポート材が残った状態でお届けする場合があります。
 使う前に取り除いてください。
 
-<!-- 上と同じ手順で取得した添付 URL を、下の行に単独行で貼ってください。 -->
-
-`VIDEO_URL_TILT_STAND`
+https://github.com/user-attachments/assets/3976ca60-955a-4a11-b60c-074f46f67fc4
 
 1. ニッパーの先を、サポート材とスタンドの隙間に入れます。
 2. サポート材だけをつまんで、少しずつ切り離します。
