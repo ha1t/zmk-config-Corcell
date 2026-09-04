@@ -63,11 +63,16 @@
         int-gpios = <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         /*
-         * Without these the driver's init sends no command at all, so a
-         * module that powers up idle or asleep never reports anything.
+         * Without this the driver's init sends no command at all, so a
+         * module that powers up asleep never reports anything.
+         *
+         * Only Wake up (0x22 0x00 0x00 0x08) and Sleep are in the YDX-C09
+         * datasheet, and the driver's lenotp_wakeup matches it byte for
+         * byte. exit-idle-on-init is deliberately left off: the 0x25 ...
+         * sequence behind it is undocumented for this part, and a NACK
+         * there fails driver init outright.
          */
         wakeup-on-init;
-        exit-idle-on-init;
 
         /* Let ZMK sleep actually save power on a dry-cell build. */
         sleep-on-suspend;
