@@ -17,10 +17,14 @@ Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK
 - DYA Studio で編集するときは、layer 3 の `&studio_unlock` を押してから接続します。
 - DYA Studio が最初に読む device info は、unlock 前でも取得できるように
   `CONFIG_ZMK_DEVICE_INFO_STUDIO_RPC_REQUIRE_UNLOCK=n` を明示しています。
-- Studio へは BLE トランスポート（`CONFIG_ZMK_STUDIO_TRANSPORT_BLE`、`ZMK_BLE` 有効時の既定）で
-  接続します。USB シリアル用の `studio-rpc-usb-uart` snippet は使いません。ZMK の
-  `build-user-config.yml` は 1 ビルドにつき snippet を 1 つしか渡せず、
-  FPC モジュール用の snippet と併用できないためです。
+- Studio へは USB シリアル（`studio-rpc-usb-uart` snippet）と BLE
+  （`CONFIG_ZMK_STUDIO_TRANSPORT_BLE`、`ZMK_BLE` 有効時の既定）の両方で接続できます。
+  Windows と macOS では BLE 接続が既存の HID ボンドを巻き添えにすることがあるので、
+  USB のほうが確実です。
+- ZMK の `build-user-config.yml` は `snippet:` を 1 つしか渡せませんが、Zephyr の
+  `SNIPPET` は元からリストを取るので、`snippet:` を使わず `cmake-args` で
+  `-DSNIPPET="corcell-right-slot1-paw3222;studio-rpc-usb-uart"` と書けば
+  FPC モジュール用の snippet と併用できます。
 - ポインタの倍率は `mouse_runtime_input_processor` / `scroll_runtime_input_processor`
   に持たせているので、DYA Studio から実機で調整できます。
 
