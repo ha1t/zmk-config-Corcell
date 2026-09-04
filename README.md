@@ -9,12 +9,16 @@ Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK
 通常版との違いは DYA Studio 関連のみで、キー配線・センサー設定・ポインタの
 効き方は `main` と揃えてあります。
 
-- ZMK Studio を有効にし、ロック（`CONFIG_ZMK_STUDIO_LOCKING`）は既定どおり有効のままにしています。
-  無効にすると `CONFIG_ZMK_STUDIO_LOCK_BLE_DIRECT_ADVERTISING_ON_UNLOCK`（既定は
-  `y if ZMK_STUDIO_LOCKING && ZMK_BLE`）も落ちてしまい、`&studio_unlock` を押しても
-  directed advertising が有効になりません。Linux 以外のブラウザーはこの advertising が
-  ないと Studio の GATT サービスを掴めず、ペア設定のあとで止まります。
-- DYA Studio で編集するときは、layer 3 の `&studio_unlock` を押してから接続します。
+- ZMK Studio を有効にし、ロックは無効（`CONFIG_ZMK_STUDIO_LOCKING=n`）にしています。
+  USB 接続で使う前提なので、unlock 操作なしで編集できるほうが実用的です。
+  なお `&mo 3` は右手側にあるのに、押せるほうの `&studio_unlock` は左手側の ESC 位置に
+  あります（右手側の `&studio_unlock` はボールの位置）。ロックを有効にすると、
+  unlock するのに split が生きている必要が出てきます。
+- BLE で Studio に繋ぎたい場合はロックを有効に戻してください。
+  `CONFIG_ZMK_STUDIO_LOCK_BLE_DIRECT_ADVERTISING_ON_UNLOCK`（既定は
+  `y if ZMK_STUDIO_LOCKING && ZMK_BLE`）が連動しており、これがないと
+  Linux 以外のブラウザーは Studio の GATT サービスを掴めず、ペア設定のあとで止まります。
+  ただし Windows では BLE 接続そのものが既存の HID ボンドを壊すことがあります。
 - DYA Studio が最初に読む device info は、unlock 前でも取得できるように
   `CONFIG_ZMK_DEVICE_INFO_STUDIO_RPC_REQUIRE_UNLOCK=n` を明示しています。
 - Studio へは USB シリアル（`studio-rpc-usb-uart` snippet）と BLE
