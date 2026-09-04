@@ -33,7 +33,13 @@
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
         require-prior-idle-ms = <200>;
-        excluded-positions = <19 20 21>;
+        /*
+         * Positions listed here keep the mouse layer alive when pressed;
+         * anything else drops it and falls through to the layer below.
+         * 19/20/21 are the mouse buttons, 18 and 32 the browser back and
+         * forward keys sitting on either side of the home row.
+         */
+        excluded-positions = <18 19 20 21 32>;
     };
 };
 
