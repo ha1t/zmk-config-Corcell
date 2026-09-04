@@ -9,7 +9,12 @@ Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK
 通常版との違いは DYA Studio 関連のみで、キー配線・センサー設定・ポインタの
 効き方は `main` と揃えてあります。
 
-- ZMK Studio を有効にし、ロックは無効（`CONFIG_ZMK_STUDIO_LOCKING=n`）にしています。
+- ZMK Studio を有効にし、ロック（`CONFIG_ZMK_STUDIO_LOCKING`）は既定どおり有効のままにしています。
+  無効にすると `CONFIG_ZMK_STUDIO_LOCK_BLE_DIRECT_ADVERTISING_ON_UNLOCK`（既定は
+  `y if ZMK_STUDIO_LOCKING && ZMK_BLE`）も落ちてしまい、`&studio_unlock` を押しても
+  directed advertising が有効になりません。Linux 以外のブラウザーはこの advertising が
+  ないと Studio の GATT サービスを掴めず、ペア設定のあとで止まります。
+- DYA Studio で編集するときは、layer 3 の `&studio_unlock` を押してから接続します。
 - DYA Studio が最初に読む device info は、unlock 前でも取得できるように
   `CONFIG_ZMK_DEVICE_INFO_STUDIO_RPC_REQUIRE_UNLOCK=n` を明示しています。
 - Studio へは BLE トランスポート（`CONFIG_ZMK_STUDIO_TRANSPORT_BLE`、`ZMK_BLE` 有効時の既定）で
