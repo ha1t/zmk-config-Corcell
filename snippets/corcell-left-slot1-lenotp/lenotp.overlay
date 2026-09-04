@@ -28,7 +28,7 @@
 &i2c0 {
     compatible = "nordic,nrf-twim";
     status = "okay";
-    clock-frequency = <I2C_BITRATE_FAST>;
+    clock-frequency = <I2C_BITRATE_STANDARD>;
     pinctrl-0 = <&corcell_left_slot1_lenotp_i2c0_default>;
     pinctrl-1 = <&corcell_left_slot1_lenotp_i2c0_sleep>;
     pinctrl-names = "default", "sleep";
@@ -38,6 +38,9 @@
         reg = <0x15>;
         status = "okay";
         int-gpios = <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+        wakeup-on-init;
+        exit-idle-on-init;
 
         sleep-on-suspend;
         wakeup-on-resume;

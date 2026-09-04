@@ -44,7 +44,14 @@
 &i2c0 {
     compatible = "nordic,nrf-twim";
     status = "okay";
-    clock-frequency = <I2C_BITRATE_FAST>;
+    /*
+     * 100kHz, not 400kHz. The only pull-ups here are the nRF's internal ones
+     * (~13k), P0.09/P0.10 are the NFC pins with their protection circuit in
+     * the way, and the module hangs off an FPC. The PAW got away with this
+     * because SPI drives push-pull; I2C is open-drain and has to rely on
+     * those pull-ups to bring the line back up.
+     */
+    clock-frequency = <I2C_BITRATE_STANDARD>;
     pinctrl-0 = <&corcell_right_slot1_lenotp_i2c0_default>;
     pinctrl-1 = <&corcell_right_slot1_lenotp_i2c0_sleep>;
     pinctrl-names = "default", "sleep";
@@ -54,6 +61,13 @@
         reg = <0x15>;
         status = "okay";
         int-gpios = <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+        /*
+         * Without these the driver's init sends no command at all, so a
+         * module that powers up idle or asleep never reports anything.
+         */
+        wakeup-on-init;
+        exit-idle-on-init;
 
         /* Let ZMK sleep actually save power on a dry-cell build. */
         sleep-on-suspend;
