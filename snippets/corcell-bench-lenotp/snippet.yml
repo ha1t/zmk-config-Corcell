@@ -1,0 +1,4 @@
+name: corcell-bench-lenotp
+append:
+  EXTRA_DTC_OVERLAY_FILE: bench.overlay
+  EXTRA_CONF_FILE: bench.conf
