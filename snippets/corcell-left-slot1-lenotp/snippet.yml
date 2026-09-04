@@ -1,0 +1,4 @@
+name: corcell-left-slot1-lenotp
+append:
+  EXTRA_DTC_OVERLAY_FILE: lenotp.overlay
+  EXTRA_CONF_FILE: lenotp.conf

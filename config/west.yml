@@ -10,12 +10,17 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
+    - name: yuchamichami
+      url-base: https://github.com/yuchamichami
   projects:
     - name: zmk-west-commands
       import: true
     - name: zmk-driver-paw3222
       remote: sekigon-gonnoc
       revision: df652881be2520bde4f64ab6ca35e4c5708f4f9b
+    - name: zmk-driver-lenotp
+      remote: yuchamichami
+      revision: e3003fccfde5860ecfe603968c6b2065698bd54a
     - name: zmk-feature-module-physical-layout
     - name: zmk
       revision: main+dya

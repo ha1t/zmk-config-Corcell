@@ -3,8 +3,31 @@
 Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK ファームウェアです。
 キー配線、matrix transform、physical layout、charlieplex kscan は Corchibi 互換です。
 
-`main` ブランチは通常版ファームウェアです。
-DYA Studio 対応版は `dya-studio` ブランチで管理します。
+**このブランチ（`lenotp`）は、FPC スロット 1 のセンサーを PAW3222 から
+lenoTP に置き換えた版です。**
+通常版は `main`、DYA Studio 対応版は `dya-studio` ブランチです。
+
+lenoTP モジュールは PAW3222 とピン配置互換なので、スロット 1 のネットを
+そのまま流用します。
+
+| FPC | lenoTP | PAW3222 での役割 | XIAO |
+|---|---|---|---|
+| 1 | NC | NCS | P0.05（RE_B）・未使用 |
+| 2 | SDA | SDIO | `P0.09` |
+| 3 | SCL | SCLK | `P0.10` |
+| 4 | INT | MOTION | `P1.12` |
+| 5 | VCC | VCC | 3V3 |
+| 6 | GND | GND | GND |
+
+- ドライバは [`zmk-driver-lenotp`](https://github.com/yuchamichami/zmk-driver-lenotp) です。
+  I2C アドレスは `0x15`、`INT` は `GPIO_ACTIVE_LOW | GPIO_PULL_UP` で受けます。
+- nRF52840 の `i2c0` と `spi0` は同一インスタンス（どちらも `0x40003000`）なので、
+  snippet 側で `spi0` を無効化しています。PAW3222 との併用はできません。
+- `P0.09` / `P0.10` は NFC ピンですが、`corcell.dtsi` の `nfct-pins-as-gpios` で
+  GPIO として使える状態にしてあります。
+- 電池駆動のため `sleep-on-suspend` / `wakeup-on-resume` を有効にしています。
+- **向きと速度は未調整です。** 実機で確認したうえで、ドライバの
+  `invert-x` / `invert-y` / `swap-xy` / `x-divisor` / `y-divisor` で合わせてください。
 
 ## セッティングガイド
 

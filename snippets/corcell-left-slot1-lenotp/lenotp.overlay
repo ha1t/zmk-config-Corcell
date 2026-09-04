@@ -1,0 +1,50 @@
+#include <dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <zephyr/dt-bindings/i2c/i2c.h>
+
+/* Same slot 1 wiring as the right half; see the right-hand snippet for the
+ * FPC pin map and why spi0 has to be disabled. */
+&spi0 {
+    status = "disabled";
+};
+
+&pinctrl {
+    corcell_left_slot1_lenotp_i2c0_default: corcell_left_slot1_lenotp_i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 10)>;
+            bias-pull-up;
+        };
+    };
+
+    corcell_left_slot1_lenotp_i2c0_sleep: corcell_left_slot1_lenotp_i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 10)>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    compatible = "nordic,nrf-twim";
+    status = "okay";
+    clock-frequency = <I2C_BITRATE_FAST>;
+    pinctrl-0 = <&corcell_left_slot1_lenotp_i2c0_default>;
+    pinctrl-1 = <&corcell_left_slot1_lenotp_i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    corcell_left_slot1_lenotp: input@15 {
+        compatible = "lenotp";
+        reg = <0x15>;
+        status = "okay";
+        int-gpios = <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+        sleep-on-suspend;
+        wakeup-on-resume;
+    };
+};
+
+&trackball_split_L {
+    status = "okay";
+    device = <&corcell_left_slot1_lenotp>;
+};
