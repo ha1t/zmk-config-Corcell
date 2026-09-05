@@ -36,10 +36,10 @@
         /*
          * Positions listed here keep the mouse layer alive when pressed;
          * anything else drops it and falls through to the layer below.
-         * 19/20/21 are the mouse buttons, 18 and 32 the browser back and
+         * 9/19/20 are the mouse buttons, 18 and 32 the browser back and
          * forward keys sitting on either side of the home row.
          */
-        excluded-positions = <18 19 20 21 32>;
+        excluded-positions = <9 18 19 20 32>;
     };
 };
 
