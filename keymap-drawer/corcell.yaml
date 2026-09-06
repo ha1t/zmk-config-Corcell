@@ -161,8 +161,8 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - BT CLR
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - OUT USB
+  - OUT BLE
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: BT, h: '0'}
