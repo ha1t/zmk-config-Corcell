@@ -13,6 +13,9 @@ USB は **右手側** に接続します。左右間の通信には Bluetooth �
 効き方は `main` と揃えてあります。
 
 - ZMK Studio を有効にし、ロックは無効（`CONFIG_ZMK_STUDIO_LOCKING=n`）にしています。
+- BLE のブラウザ検出用に `CONFIG_ZMK_STUDIO_LOCK_BLE_DIRECT_ADVERTISING_ON_UNLOCK=y` を
+  明示しています。Bluetooth で Studio を開くときは、レイヤー 3 ＋右親指の A 位置の
+  `studio_unlock` を押してから機器を選択してください。
 - DYA Studio が最初に読む device info は、unlock 前でも取得できるように
   `CONFIG_ZMK_DEVICE_INFO_STUDIO_RPC_REQUIRE_UNLOCK=n` を明示しています。
 - Studio へは右手側の USB または Bluetooth で接続します。右手側では FPC 用と
@@ -126,6 +129,7 @@ Zephyr が各名前に分解するため、FPC モジュールと Studio USB は
 ### 未リリース — 接続改善
 
 - 右手側の Studio USB 通信を有効にし、FPC センサー設定と併用しました。（対象: 右手）
+- ロック無効時も `studio_unlock` で BLE のブラウザ検出用広告を開始できるようにしました。（対象: 右手）
 - 初期キーマップのレイヤー 3 に、U 位置の USB 優先と I 位置の Bluetooth 優先を追加しました。
   保存済みキーマップがある場合は自動で追加されません。接続ガイドの移行手順を参照してください。（対象: 右手）
 - 初回接続、旧版と新版の違い、USB の切り分け、再ペアリング、更新と初期化の手順を追加しました。

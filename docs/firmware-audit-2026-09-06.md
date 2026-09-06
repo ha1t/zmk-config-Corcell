@@ -15,6 +15,7 @@
 | --- | --- | --- |
 | 高 | 右手の既存生成設定は `CONFIG_ZMK_USB=y`、Studio transport は BLE のみ。Studio 用 UART chosen がない | USB の通常入力は対応するが USB Studio は未対応。右手の snippet に `studio-rpc-usb-uart` を追加 |
 | 高 | README は FPC と Studio USB の snippet を併用不能と説明 | v0.3 workflow は `-S "${snippet}"` を渡し、Zephyr は空白をリストへ展開する。空白区切り文字列で併用し、説明を訂正 |
+| 高 | Studio ロック無効時、`ZMK_STUDIO_LOCK_BLE_DIRECT_ADVERTISING_ON_UNLOCK` も既定で無効。接続済みプロファイルは広告を止める | OS 接続後に Web Bluetooth の候補へ出ない原因候補。同設定を明示的に有効にし、既存 `studio_unlock` キーで広告を開始する手順を追加 |
 | 高 | 初期配列に `&out` がない。出力先は保存され、RPC の transport も現在の出力先に追従する | BLE 優先で USB が効かない、USB 給電中に BLE Studio が応答しない原因候補。レイヤー 3 の右 U／I に USB／BLE を追加 |
 | 高 | 右が central、左が peripheral。左の `ZMK_USB=y` 要求が無効になる警告は役割の依存条件によるもの | 左 USB で通常の HID 入力ができないのは構成上の仕様。右へ挿す案内と、左右間は常に BLE という説明を追加 |
 | 中 | Studio 保存済みの配列があると、ファームの新しい初期配列がそのまま使われない | 更新だけで新しい出力キーが現れるとは案内しない。既存配列への手動追加と、保存内容の退避・初期化の違いを案内 |
@@ -41,7 +42,8 @@
 
 1. `build.yaml`：右の PAW3222 snippet と Studio USB snippet を同時に渡す。
 2. `config/corcell.keymap`：レイヤー 3 の U 位置に `OUT_USB`、I 位置に `OUT_BLE`。通常レイヤーと既存の Bluetooth 登録操作を維持。
-3. README／接続ガイド／Discord 告知案：旧版と改善版、通常入力と Studio、初回接続と初期化を区別して説明。
+3. `corcell_r.conf`：ロック無効でも解除キーによる BLE ブラウザ検出を有効にする。
+4. README／接続ガイド／Discord 告知案：旧版と改善版、通常入力と Studio、初回接続と初期化を区別して説明。
 
 ## 検証状況
 
@@ -54,7 +56,7 @@
 | 新規 Bluetooth | 空きプロファイルで OS に登録し、左右の文字・左右ボールが入力できる | 未実施 |
 | 右 USB HID | データケーブルで接続し USB 優先。左右のキーとボールが動く | 未実施 |
 | USB Studio | PC Chrome／Edge でポート選択→読出し→編集→保存→再起動後保持 | 未実施 |
-| BLE Studio | USB を外して BLE 出力にし、読出し・保存できる | 未実施 |
+| BLE Studio | USB を外して BLE 出力にし、解除キーを押すとブラウザに候補が現れ、読出し・保存できる | 未実施 |
 | 出力切替 | USB＋BLE 接続中に L3＋U／I で所定の機器に出力される。切替先で Studio 再接続できる | 未実施 |
 | 既存利用者の更新 | Studio 配列・BLE 優先保存済みから UF2 更新。保存内容と手動キー追加を確認 | 未実施 |
 | 左電源 OFF | 右の入力・接続操作は可能、左は無反応。左 ON 後に復帰する | 未実施 |
@@ -75,3 +77,5 @@
 - [DYA fork の出力先処理](https://github.com/cormoran/zmk/blob/main%2Bdya/app/src/endpoints.c)
 - [DYA fork の RPC transport 選択](https://github.com/cormoran/zmk/blob/main%2Bdya/app/src/studio/rpc.c)
 - [DYA Studio](https://github.com/cormoran/dya-studio)
+
+BLE 検出の根拠：DYA fork の `app/src/studio/Kconfig` は検出用広告の既定を locking＋BLE 時だけ有効にし、`app/src/studio/core.c` の unlock はこの設定の有効時だけ `zmk_ble_set_directed_advertising(true)` を呼ぶ。`app/src/ble.c` は active profile 接続済みのとき、このフラグがなければ広告を停止する。ロック無効でもこの設定を個別に有効化できる。
