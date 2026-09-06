@@ -25,6 +25,32 @@ USB は **右手側** に接続します。左右間の通信には Bluetooth �
 - ポインタの倍率は `mouse_runtime_input_processor` / `scroll_runtime_input_processor`
   に持たせているので、DYA Studio から実機で調整できます。
 
+## ブランチの選び方
+
+利用者向けは **`main` と `dya-studio`** です。接続ガイドのための専用ブランチは不要で、各 README から参照できます。
+
+| ブランチ | 用途 |
+| --- | --- |
+| [`main`](https://github.com/yuchamichami/zmk-config-Corcell/tree/main) | 通常版。ブラウザでの設定編集を使わない方向け |
+| [`dya-studio`](https://github.com/yuchamichami/zmk-config-Corcell/tree/dya-studio) | DYA Studio 対応版。ブラウザでキーマップやポインタ倍率を調整する方向け |
+| [`lenotp`](https://github.com/yuchamichami/zmk-config-Corcell/tree/lenotp) | lenoTP の実験用。通常の利用者向け配布版ではありません |
+
+## 接続・使い方
+
+- **USB は右手側に挿します。** 右が親機で、左の入力も右から PC へ送ります。USB 使用時も左右間は Bluetooth 通信なので、左にも電源が必要です。
+- 初回 Bluetooth 接続は、USB を外し、左右の電源を入れます。初期配列では右親指のレイヤー 3 キー（Space と短押し A のキーの間）を押しながら右上端の Backspace 位置を押して接続先 0 を選び、OS の Bluetooth 設定で Corcell を追加します。
+- **USB の文字入力と Studio 接続は別機能です。** `main` と `lenotp` は Studio 非対応です。DYA Studio を使う場合は `dya-studio` のファームを選んでください。
+- DYA 接続改善版の初期配列では、レイヤー 3 ＋ U 位置で USB 優先、＋ I 位置で Bluetooth 優先、＋右親指の A 位置でブラウザの Bluetooth 検出を開始します。通常版・旧 DYA 版・保存済みの独自配列では同じ操作が使えるとは限りません。
+- `The port is already open` はまず Studio のタブを閉じ、USB を抜き差しして 1 タブだけで再接続します。全設定初期化を最初に行う必要はありません。
+- UF2 は ZIP を展開し、右用を右、左用を左へ **1 ファイルずつ**コピーします。Windows の `0x80070022` だけでは書き込みの成否を判断せず、通常起動と更新版を確認してください。
+- `settings_reset` は保存済み配列・ペアリングなどを消す最終手段です。通常の更新では不要です。
+
+**詳しい接続・更新・復旧手順： [接続・使い方ガイド](https://github.com/yuchamichami/zmk-config-Corcell/blob/dya-studio/docs/connection-guide.md)**
+
+[Discord 向け案内文](https://github.com/yuchamichami/zmk-config-Corcell/blob/dya-studio/docs/discord-connection-announcement.md) ／ [点検結果と実機確認項目](https://github.com/yuchamichami/zmk-config-Corcell/blob/dya-studio/docs/firmware-audit-2026-09-06.md)
+
+ガイド内の Studio 操作は DYA 版向けです。`lenotp` のセンサー調整や動作確認は実験用ブランチの説明を参照してください。
+
 ## セッティングガイド
 
 ボトムケースの開けかたと、チルトスタンドのサポート材の除去は
@@ -126,7 +152,7 @@ Zephyr が各名前に分解するため、FPC モジュールと Studio USB は
 
 書き込みが必要な側を「対象」に書いています。記載がない項目は左右とも書き換えてください。
 
-### 未リリース — 接続改善
+### 2026-09-07 — 接続改善（実機確認待ち）
 
 - 右手側の Studio USB 通信を有効にし、FPC センサー設定と併用しました。（対象: 右手）
 - ロック無効時も `studio_unlock` で BLE のブラウザ検出用広告を開始できるようにしました。（対象: 右手）
