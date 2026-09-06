@@ -28,10 +28,11 @@
 
 ## 全体点検の補足
 
-- 左右の charlieplex 入力と物理配置を比較し、各レイヤー 50 入力と transform／physical layout の 50 位置を確認する。
+- 左右の charlieplex 入力と物理配置を比較し、各レイヤー 50 入力と transform／physical layout の 50 位置を確認済み。
 - 右の `col-offset=6`、左右の `interrupt-gpios=P1.13`、`wakeup-source` がある。
 - PAW3222 の SPI は SCLK=P0.10、SDIO=P0.09、MOTION=P1.12。センサーの NCS は GND 固定の構成。ドライバは復帰対策済み `fc946760...` に固定されている。
 - 左トラックボールは split input で右へ送る。右の FPC が PAW3222 の標準構成を今回の検証対象とする。FPC エンコーダーへの差し替えなど全組合せの動作保証は含まない。
+- XIAO には既存のコンソール用 CDC ACM ノードがあるため、旧版でもシリアルポートが見える場合がある。USB snippet は別の Studio 用ポートを追加する。ポートの存在だけでは Studio 対応を判定できず、改善版で複数候補が出る場合の選び直しも案内する。
 - デバイスツリーには Studio の physical layout があり、chosen の matrix-transform は使っていない。
 - 独自 C 実装は電池換算・起動 LED・縦横スクロール処理を確認。接続のために変更する必要を示す証拠はなかった。ADC 精度、電池寿命、斜めスクロールの操作感は実機で評価する。
 - 既存右ビルドは Flash 368,260 B / 788 KiB、RAM 163,324 B / 256 KiB。USB 追加後も生成結果で確認する。
@@ -47,7 +48,16 @@
 
 ## 検証状況
 
-変更版のビルド結果と生成設定の確認は、検証完了後にここへ追記する。実機未確認のため、配布済み・実機確認済みとは扱わない。
+- 検証コミット：`e073cfb217965b2b243b2de435efa81ce26f3190`（これ以降の本 PR 内の追記は説明・検証記録のみ）。
+- [変更版 Build 34040690890](https://github.com/yuchamichami/zmk-config-Corcell/actions/runs/34040690890)：右手・左手・settings_reset・成果物結合すべて成功。
+- 右手の生成設定：`ZMK_USB=y`、`ZMK_STUDIO_TRANSPORT_UART=y`、`ZMK_STUDIO_TRANSPORT_BLE=y`、`ZMK_STUDIO_LOCK_BLE_DIRECT_ADVERTISING_ON_UNLOCK=y`、`PAW3222=y` を確認。
+- 右手の生成 devicetree：`zmk,studio-rpc-uart` が追加した CDC ACM ノードを参照することを確認。
+- 両 snippet の適用をビルドログで確認。左手の `PAW3222=y` 維持と Studio UART 非搭載も確認。
+- 右手メモリ：Flash 375,024 B / 788 KiB（46.48%）、RAM 166,908 B / 256 KiB（63.67%）。容量超過なし。
+- キーマップ：6 レイヤー各 50 キー、physical layout／transform 各 50 位置、変更位置が L3 の 7・8 のみであることを照合。接続ガイドの操作位置と既存 Bluetooth 操作も照合。
+- [キーマップ図の自動生成](https://github.com/yuchamichami/zmk-config-Corcell/actions/runs/34040611542) 成功。U／I の OUT USB／OUT BLE 表示を確認。
+- ドキュメントの相対リンクと差分の空白エラーを確認。
+- 実機未確認のため、配布済み・実機確認済みとは扱わない。
 
 ## 配布前の実機チェック
 
