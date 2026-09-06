@@ -6,16 +6,19 @@ Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK
 **このブランチ（`dya-studio`）は DYA Studio 対応版です。**
 通常版は `main` ブランチで管理します。
 
+初めて使う方・接続で困っている方は **[接続・使い方ガイド](docs/connection-guide.md)** を参照してください。
+USB は **右手側** に接続します。左右間の通信には Bluetooth を使います。
+
 通常版との違いは DYA Studio 関連のみで、キー配線・センサー設定・ポインタの
 効き方は `main` と揃えてあります。
 
 - ZMK Studio を有効にし、ロックは無効（`CONFIG_ZMK_STUDIO_LOCKING=n`）にしています。
 - DYA Studio が最初に読む device info は、unlock 前でも取得できるように
   `CONFIG_ZMK_DEVICE_INFO_STUDIO_RPC_REQUIRE_UNLOCK=n` を明示しています。
-- Studio へは BLE トランスポート（`CONFIG_ZMK_STUDIO_TRANSPORT_BLE`、`ZMK_BLE` 有効時の既定）で
-  接続します。USB シリアル用の `studio-rpc-usb-uart` snippet は使いません。ZMK の
-  `build-user-config.yml` は 1 ビルドにつき snippet を 1 つしか渡せず、
-  FPC モジュール用の snippet と併用できないためです。
+- Studio へは右手側の USB または Bluetooth で接続します。右手側では FPC 用と
+  `studio-rpc-usb-uart` の両 snippet を、`snippet:` の空白区切り文字列で指定します。
+- 2026-09-05 の `c2c3cb8` までの DYA 版は Studio の USB 接続に未対応です。
+  USB でのキー入力と Studio 接続は別の機能です。更新方法は接続ガイドを参照してください。
 - ポインタの倍率は `mouse_runtime_input_processor` / `scroll_runtime_input_processor`
   に持たせているので、DYA Studio から実機で調整できます。
 
@@ -36,8 +39,8 @@ Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK
 - PAW3222 は `SCLK=P0.10`、`SDIO=P0.09`、`MOTION=P1.12` を使います。
 - PAW3222 の NCS はデフォルトで GND 固定です。そのため、ファームウェア側では SPI chip-select GPIO を設定していません。
 - PAW3222 で chip-select GPIO 制御が必要になった場合のみ、NCS を `RE_B` 側へジャンパして `&spi0` 配下に `cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;` を追加します。
-- PAW3222 の CPI はファームウェア側で上書きせず、カーソル移動量は固定の input processor 倍率
-  （`zip_xy_scaler 2 5`、スクロールは `zip_scroll_scaler 1 10`）で調整します。
+- PAW3222 の CPI はファームウェア側で上書きせず、DYA Studio の runtime input processor
+  倍率で調整します。既定値はカーソル `2/5`、スクロール `1/10` です。
 - 基板上のロータリーエンコーダーは `RE_A=P0.04`、`RE_B=P0.05` で、デフォルトで有効です。
 - FPC エンコーダーモジュールでは、PAW3222 の `NCS` 位置を A 相、`MOTION` 位置を B 相として使います。
 - 現行回路では、エンコーダーモジュール使用時に `NCS` を `RE_B` 側へジャンパしてください。このときファームウェアは `A=P0.05`、`B=P1.12` として読みます。
@@ -46,7 +49,8 @@ Corcell は、PAW3222 トラックボールと乾電池駆動に対応した ZMK
 ## FPC モジュールの切り替え
 
 FPC モジュールは Zephyr/ZMK のスニペットで切り替えます。
-通常の `build.yaml` では PAW3222 snippet だけを指定しているため、生成される UF2 の数は増えません。
+通常の `build.yaml` では左右に PAW3222、右手に加えて Studio USB 用 snippet を指定します。
+生成される UF2 は右手・左手・設定初期化用の 3 つです。
 
 - 右手 PAW3222: `corcell-right-slot1-paw3222`
 - 左手 PAW3222: `corcell-left-slot1-paw3222`
@@ -59,7 +63,7 @@ FPC モジュールは Zephyr/ZMK のスニペットで切り替えます。
 ユーザー目線では次の流れです。
 
 1. 左右それぞれ、FPC スロットに取り付けるモジュールを決めます。
-2. `build.yaml` の `corcell_r` と `corcell_l` に、取り付けたモジュールのスニペットを 1 つだけ指定します。
+2. `build.yaml` の `corcell_r` と `corcell_l` の FPC 用 snippet を選びます。右手側の `studio-rpc-usb-uart` は残します。
 3. 変更を push します。
 4. GitHub Actions の `Build` が完了したら、Artifacts から UF2 をダウンロードします。
 5. `Corcell_R-...uf2` を右手、`Corcell_L-...uf2` を左手に書き込みます。
@@ -70,11 +74,11 @@ FPC モジュールは Zephyr/ZMK のスニペットで切り替えます。
 include:
   - board: xiao_ble/nrf52840/zmk
     shield: corcell_r
-    artifact-name: Corcell_R-xiao_ble_zmk
-    snippet: corcell-right-slot1-encoder
+    artifact-name: Corcell_R-dya-studio-xiao_ble_zmk
+    snippet: corcell-right-slot1-encoder studio-rpc-usb-uart
   - board: xiao_ble/nrf52840/zmk
     shield: corcell_l
-    artifact-name: Corcell_L-xiao_ble_zmk
+    artifact-name: Corcell_L-dya-studio-xiao_ble_zmk
     snippet: corcell-left-slot1-paw3222
 ```
 
@@ -83,14 +87,19 @@ include:
 `west build` に `-S` が渡りません。その場合でもビルドは成功しますが、
 スニペットの内容が丸ごと無視された UF2 が出力されます。
 
+単数キーでも、文字列の中に空白で区切って複数の snippet 名を指定できます。
+Zephyr が各名前に分解するため、FPC モジュールと Studio USB は併用できます。
+
 新しい FPC モジュールを増やす場合は、`snippets/` に右手用と左手用のスニペットを追加します。
 `build.yaml` には実際に取り付けたモジュールのスニペットだけを書くため、モジュール候補が増えても UF2 の出力数は増えません。
 
 ## 電源設定
 
 - ZMK sleep を有効にしています。
-- BLE TX power は Corchibi の +8 dBm ではなく、0 dBm にしています。
-- BLE preferred connection interval は `6-12`、latency は `0` にして、ポインタ操作の遅延を抑えています。
+- BLE TX power は +8 dBm です。
+- BLE preferred connection interval は `12-12`（15 ms）、latency は `0` です。
+  これは要求値であり、ホストとの実際の接続条件は接続先にも依存します。
+- 30 秒で idle、15 分で deep sleep に入る設定です。保存済みの DYA 設定がある場合はそちらも確認してください。
 - PAW3222 の `force-awake` は有効にしていません。
 - smooth scrolling は無効にしています。
 - logging、shell、SPI shell は無効にしています。
@@ -113,6 +122,14 @@ include:
 ## 更新履歴
 
 書き込みが必要な側を「対象」に書いています。記載がない項目は左右とも書き換えてください。
+
+### 未リリース — 接続改善
+
+- 右手側の Studio USB 通信を有効にし、FPC センサー設定と併用しました。（対象: 右手）
+- 初期キーマップのレイヤー 3 に、U 位置の USB 優先と I 位置の Bluetooth 優先を追加しました。
+  保存済みキーマップがある場合は自動で追加されません。接続ガイドの移行手順を参照してください。（対象: 右手）
+- 初回接続、旧版と新版の違い、USB の切り分け、再ペアリング、更新と初期化の手順を追加しました。
+- [点検結果と実機確認項目](docs/firmware-audit-2026-09-06.md) をまとめました。
 
 ### 2026-09-05
 
