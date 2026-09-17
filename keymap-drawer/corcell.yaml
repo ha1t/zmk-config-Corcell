@@ -42,11 +42,11 @@ layers:
   - LCTRL
   - LGUI
   - LALT
-  - '1'
-  - '2'
+  - {t: EISUU, h: L1}
+  - {t: KANA, h: L2}
   - SPACE
   - SPACE
-  - '3'
+  - {t: HENKAN, h: L3}
   - {t: A, h: '5'}
   - LEFT
   - DOWN
@@ -93,7 +93,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -145,7 +145,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -199,7 +199,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - ''
-  - {type: held}
+  - {t: ▽, type: trans}
   - '&studio_unlock'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
