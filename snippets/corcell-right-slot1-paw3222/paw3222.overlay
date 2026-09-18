@@ -36,10 +36,11 @@
         /*
          * Positions listed here keep the mouse layer alive when pressed;
          * anything else drops it and falls through to the layer below.
-         * 9/19/20 are the mouse buttons, 18 and 32 the browser back and
-         * forward keys sitting on either side of the home row.
+         * Mouse buttons: 8 RCLK, 9 BTN4, 19 LCLK, 20 MCLK, 22 BTN5.
+         * 10/18/21/23/32 are &none guards around the buttons so a stray
+         * press while mousing neither types nor drops the layer.
          */
-        excluded-positions = <9 18 19 20 32>;
+        excluded-positions = <8 9 10 18 19 20 21 22 23 32>;
     };
 };
 
