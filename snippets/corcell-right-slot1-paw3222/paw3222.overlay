@@ -39,8 +39,11 @@
          * Mouse buttons: 8 RCLK, 9 BTN4, 19 LCLK, 20 MCLK, 22 BTN5.
          * 10/18/21/23/32 are &none guards around the buttons so a stray
          * press while mousing neither types nor drops the layer.
+         * 24/38/39/40 are the left-hand modifiers (LSHIFT/LCTRL/LGUI/LALT)
+         * so Ctrl+click and friends work while the layer is up; they are
+         * &trans on the mouse layer and fall through to the base modifiers.
          */
-        excluded-positions = <8 9 10 18 19 20 21 22 23 32>;
+        excluded-positions = <8 9 10 18 19 20 21 22 23 32 24 38 39 40>;
     };
 };
 
