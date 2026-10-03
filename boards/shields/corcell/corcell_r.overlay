@@ -5,7 +5,7 @@
 };
 
 &kscan0 {
-    compatible = "zmk,kscan-gpio-charlieplex";
+    compatible = "corcell,kscan-gpio-charlieplex";
     gpios
         = <&gpio0 3 (GPIO_ACTIVE_HIGH)>
         , <&gpio0 28 (GPIO_ACTIVE_HIGH)>

@@ -36,3 +36,13 @@ config CORCELL_POWER_ON_LED_MS
     help
         How long the power-on LED stays lit. The pin is disconnected
         afterwards, so this costs nothing once the LED goes dark.
+
+DT_COMPAT_CORCELL_KSCAN_GPIO_CHARLIEPLEX := corcell,kscan-gpio-charlieplex
+
+config CORCELL_KSCAN_CHARLIEPLEX
+    bool
+    default $(dt_compat_enabled,$(DT_COMPAT_CORCELL_KSCAN_GPIO_CHARLIEPLEX))
+    select ZMK_KSCAN_GPIO_DRIVER
+    help
+        Charlieplex key scanning with a filter for the ghost press that two
+        chained keys produce on a third position.

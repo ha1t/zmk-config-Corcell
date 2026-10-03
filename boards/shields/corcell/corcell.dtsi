@@ -30,7 +30,7 @@
 
     /* Keep key scanning identical to Corchibi; the PCB matrix did not change. */
     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-charlieplex";
+        compatible = "corcell,kscan-gpio-charlieplex";
         wakeup-source;
     };
 
