@@ -16,9 +16,11 @@
  *
  * Each pass therefore reads the whole matrix first, then refuses a press
  * that is not already registered whenever another pin b explains it as such
- * a chain. A key that was already down when the chain formed stays down.
- * The cost is that pressing (a,c) while (a,b) and (b,c) are held is ignored,
- * which is electrically indistinguishable from the ghost anyway.
+ * a chain and one of the two chain keys is itself registered. A key that was
+ * already down when the chain formed stays down. The cost is that pressing
+ * (a,c) while (a,b) and (b,c) are held is ignored, which is electrically
+ * indistinguishable from the ghost anyway; a ghost from two keys that land
+ * within the same debounce window gets through.
  */
 
 #include <zmk/debounce.h>
@@ -265,15 +267,28 @@ static void kscan_charlieplex_read_end(const struct device *dev) {
     }
 }
 
-/** True when some pin b makes (row,col) explainable as (row,b) + (b,col). */
+/**
+ * True when some pin b makes (row,col) explainable as (row,b) + (b,col), and at
+ * least one of those two keys is already registered as pressed.
+ *
+ * Requiring a registered key keeps one ghost from explaining away a real key.
+ * Holding the layer key (4,2) and pressing 2 (1,4) shows ghost Z (1,2); if
+ * (2,4) also reads high for a single pass, raw levels alone would call 2 a
+ * chain of Z + (2,4) and drop it. Neither of those is registered, so 2 stays.
+ */
 static bool is_ghost(const struct kscan_charlieplex_config *config,
                      const struct kscan_charlieplex_data *data, const int row, const int col) {
     for (int mid = 0; mid < config->cells.len; mid++) {
         if (mid == row || mid == col) {
             continue;
         }
-        if (data->raw_state[state_index(config, row, mid)] &&
-            data->raw_state[state_index(config, mid, col)]) {
+        const int first = state_index(config, row, mid);
+        const int second = state_index(config, mid, col);
+        if (!data->raw_state[first] || !data->raw_state[second]) {
+            continue;
+        }
+        if (zmk_debounce_is_pressed(&data->charlieplex_state[first]) ||
+            zmk_debounce_is_pressed(&data->charlieplex_state[second])) {
             return true;
         }
     }
